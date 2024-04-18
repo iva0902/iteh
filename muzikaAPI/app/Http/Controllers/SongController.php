@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SongResource;
 use App\Models\Song;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class SongController extends BaseController

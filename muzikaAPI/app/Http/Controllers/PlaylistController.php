@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PlaylistResource;
 use App\Models\Playlist;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class PlaylistController extends BaseController
@@ -67,5 +69,18 @@ class PlaylistController extends BaseController
         }
         $playlist->delete();
         return $this->success($playlist, 'Playlist deleted successfully');
+    }
+
+    public function numberOfItemsPerPlaylist(Request $request)
+    {
+        $playlists = DB::select('SELECT playlists.name, COUNT(playlist_items.id) as number_of_items FROM playlists LEFT JOIN playlist_items ON playlists.id = playlist_items.playlist_id GROUP BY playlists.name');
+        return $this->success($playlists);
+    }
+
+    public function search(Request $request)
+    {
+        $name = $request->name;
+        $playlistItems = Playlist::where('name', 'like', '%' . $name . '%')->get();
+        return $this->success($playlistItems);
     }
 }

@@ -31,12 +31,18 @@ Route::get('/playlist-items/{id}', 'App\Http\Controllers\PlaylistItemController@
 
 Route::middleware('auth:sanctum')->post('/logout', 'App\Http\Controllers\LoginController@logout');
 
+Route::get('/search', 'App\Http\Controllers\PlaylistController@search');
+Route::get('/paginate', 'App\Http\Controllers\PlaylistItemController@paginate');
+Route::get('/find-by-playlist/{id}', 'App\Http\Controllers\PlaylistItemController@findByPlaylist');
+
+Route::get('/number', 'App\Http\Controllers\PlaylistController@numberOfItemsPerPlaylist');
+
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/songs', 'App\Http\Controllers\SongController@store');
     Route::put('/songs/{id}', 'App\Http\Controllers\SongController@update');
-    Route::post('/playlists', 'App\Http\Controllers\PlaylistController@store');
     Route::put('/playlists/{id}', 'App\Http\Controllers\PlaylistController@update');
+    Route::post('/playlists', 'App\Http\Controllers\PlaylistController@store');
 
     Route::post('/playlist-items', 'App\Http\Controllers\PlaylistItemController@store');
     Route::put('/playlist-items/{id}', 'App\Http\Controllers\PlaylistItemController@update');

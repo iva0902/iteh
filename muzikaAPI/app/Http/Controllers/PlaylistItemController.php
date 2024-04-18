@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PlaylistItemResource;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class PlaylistItemController extends BaseController
@@ -67,5 +67,18 @@ class PlaylistItemController extends BaseController
         }
         $playlistItem->delete();
         return $this->success(null, 'Playlist item deleted');
+    }
+
+    public function findByPlaylist($id)
+    {
+        $playlistItems = PlaylistItem::where('playlist_id', $id)->get();
+        return $this->success(PlaylistItemResource::collection($playlistItems));
+    }
+
+    public function paginate(Request $request)
+    {
+        $perPage = $request->per_page ?? 10;
+        $playlistItems = PlaylistItem::paginate($perPage);
+        return $this->success(PlaylistItemResource::collection($playlistItems));
     }
 }
