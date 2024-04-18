@@ -19,6 +19,7 @@ class PlaylistItemResource extends JsonResource
             'playlist_id' => $this->playlist_id,
             'song_id' => $this->song_id,
             'song' => new SongResource($this->song),
+            'date_added' => $this->date_added,
         ];
     }
 }
