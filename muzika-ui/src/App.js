@@ -6,6 +6,8 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./stranice/Home";
 import About from "./stranice/About";
 import Player from "./stranice/Player";
+import Login from "./stranice/Login";
+import Register from "./stranice/Register";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/player" element={<Player />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
 
