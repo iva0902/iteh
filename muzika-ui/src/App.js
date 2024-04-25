@@ -27,7 +27,7 @@ import Admin from "./stranice/Admin";
 
 function App() {
 
-    const songs = [
+    const songsAll = [
         {
             id: 1,
             title: "Buci Bu",
@@ -122,9 +122,25 @@ function App() {
 
     ];
 
+    const songMap = new Map();
+    songMap.set("buciBu", buciBu);
+    songMap.set("imaJednoPile", imaJednoPile);
+    songMap.set("kadSiSrecan", kadSiSrecan);
+    songMap.set("majmunskiPles", majmunskiPles);
+    songMap.set("maliParadajz", maliParadajz);
+    songMap.set("najlepsaMamaNaSvetu", najlepsaMamaNaSvetu);
+    songMap.set("nezgoda", nezgoda);
+    songMap.set("patofnice", patofnice);
+    songMap.set("razboleSeLisica", razboleSeLisica);
+    songMap.set("toJePileMalo", toJePileMalo);
+    songMap.set("traktorMileta", traktorMileta);
+    songMap.set("uspavankaZaMrava", uspavankaZaMrava);
+
+
     const [currentSong, setCurrentSong] = useState(null);
     const [index, setIndex] = useState(0);
     const [audio, setAudio] = useState(null);
+    const [songs, setSongs] = useState(songsAll);
 
     const playSong = (index) => {
         if(audio){
@@ -168,7 +184,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/player" element={<Player playSong={playSong} pauseSong={pauseSong} nextSong={nextSong} previousSong={previousSong} index={index} currentSong={currentSong} songs={songs} audio={audio} />} />
-            <Route path="/playlists" element={<MyPlaylists />} />
+            <Route path="/playlists" element={<MyPlaylists songs={songs} setSongs={setSongs} songMap={songMap} playSong={playSong} pauseSong={pauseSong} nextSong={nextSong} previousSong={previousSong} index={index} currentSong={currentSong} audio={audio} />} />
             <Route path="/admin" element={<Admin />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

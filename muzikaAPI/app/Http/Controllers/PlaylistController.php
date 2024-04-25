@@ -83,4 +83,8 @@ class PlaylistController extends BaseController
         $playlistItems = Playlist::where('name', 'like', '%' . $name . '%')->get();
         return $this->success($playlistItems);
     }
+    public function findByUser($id)
+    {
+        $playlists = Playlist::where('user_id', $id)->get();
+        return $this->success($playlists);    }
 }

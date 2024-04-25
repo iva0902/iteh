@@ -36,6 +36,7 @@ Route::get('/paginate', 'App\Http\Controllers\PlaylistItemController@paginate');
 Route::get('/find-by-playlist/{id}', 'App\Http\Controllers\PlaylistItemController@findByPlaylist');
 
 Route::get('/number', 'App\Http\Controllers\PlaylistController@numberOfItemsPerPlaylist');
+Route::get('/find-by-user/{id}', 'App\Http\Controllers\PlaylistController@findByUser');
 
 Route::middleware('auth:sanctum')->group(function () {
 
