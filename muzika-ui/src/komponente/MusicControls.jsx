@@ -11,7 +11,8 @@ const MusicControls = props => {
     const {playSong, pauseSong, nextSong, previousSong, index} = props;
     return (
         <>
-            <Row className="mt-3">
+            <Row className="mt-3 justify-content-center">
+
                 <Col md={1}>
                     <Button className="btn btn-dark " onClick={() => {
                         previousSong();
