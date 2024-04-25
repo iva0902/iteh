@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import instance from "../request/instance";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import MusicPlayer from "../komponente/MusicPlayer";
+import {CSVLink} from "react-csv";
 
 const MyPlaylists = props => {
 
@@ -12,6 +13,7 @@ const MyPlaylists = props => {
     const [playlists, setPlaylists] = React.useState([]);
     const [showPlayer, setShowPlayer] = React.useState(false);
     const [currentPlaylist, setCurrentPlaylist] = React.useState(null);
+    const [csvData, setCsvData] = React.useState([[ 'Title', 'Artist', 'Duration']]);
 
     useEffect(() => {
         instance.get('/find-by-user/' + user.id)
@@ -29,6 +31,7 @@ const MyPlaylists = props => {
             instance.get('/find-by-playlist/' + currentPlaylist.id)
                 .then(res => {
                     let songs = [];
+                    let csv = [[ 'Title', 'Artist', 'Duration']];
 
                     res.data.data.forEach(playlistItem => {
                         songs.push({
@@ -38,9 +41,15 @@ const MyPlaylists = props => {
                             url: songMap.get(playlistItem.song.url),
                             duration: playlistItem.song.duration
                         });
+                        csv.push([
+                             playlistItem.song.title,
+                            playlistItem.song.artist,
+                            playlistItem.song.duration
+                        ]);
                     });
 
                     setSongs(songs);
+                    setCsvData(csv);
                 })
                 .catch(err => {
                     console.error(err);
@@ -55,7 +64,9 @@ const MyPlaylists = props => {
 
             <h1>Welcome to your personal playlist manager</h1>
             <p>Enjoy the music!</p>
-            <Row>
+
+
+                <Row>
             {
                 !showPlayer && (
                     <>
@@ -90,17 +101,24 @@ const MyPlaylists = props => {
                     {
                         showPlayer && (
                             <>
+                                <hr/>
+                                <CSVLink data={csvData}>Download me</CSVLink>
+                                <hr/>
                                 <Col md={6}>
-                                    <MusicPlayer songs={songs} currentSong={currentSong} index={index} playSong={playSong} pauseSong={pauseSong} nextSong={nextSong} previousSong={previousSong} />
+                                    <MusicPlayer songs={songs} currentSong={currentSong} index={index} playSong={playSong}
+                                                 pauseSong={pauseSong} nextSong={nextSong} previousSong={previousSong}/>
                                 </Col>
                                 <Col md={6}>
-                                    { currentSong !== null && (
+                                    {currentSong !== null && (
                                         <>
                                             <h2>Currently playing</h2>
                                             <h3>{currentSong.title}</h3>
                                             <p>{currentSong.artist}</p>
                                             <p>{currentSong.duration} seconds</p>
-                                            <Button onClick={() => { setShowPlayer(false)}}>Back to playlists</Button>
+                                            <Button onClick={() => {
+                                                setShowPlayer(false)
+                                            }}>Back to playlists</Button>
+
                                         </>
                                     )}
                                 </Col>
