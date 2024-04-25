@@ -23,6 +23,7 @@ import traktorMileta from "./pesme/traktorMileta.mp3";
 import uspavankaZaMrava from "./pesme/uspavankaZaMrava.mp3";
 import MyPlaylists from "./stranice/MyPlaylists";
 import Admin from "./stranice/Admin";
+import Add from './stranice/Add';
 
 
 function App() {
@@ -186,6 +187,7 @@ function App() {
           <Route path="/player" element={<Player playSong={playSong} pauseSong={pauseSong} nextSong={nextSong} previousSong={previousSong} index={index} currentSong={currentSong} songs={songs} audio={audio} />} />
             <Route path="/playlists" element={<MyPlaylists songs={songs} setSongs={setSongs} songMap={songMap} playSong={playSong} pauseSong={pauseSong} nextSong={nextSong} previousSong={previousSong} index={index} currentSong={currentSong} audio={audio} />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/add" element={<Add songs={songs} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

@@ -28,6 +28,7 @@ const Navigation = () => {
                             token && (
                                 <>
                                     <Nav.Link href="/playlists">My playlists</Nav.Link>
+                                    <Nav.Link href="/add">Add playlist</Nav.Link>
                                     {isAdmin && <Nav.Link href="/admin">Admin</Nav.Link>}
                                     <Nav.Link onClick={() => {
                                         window.sessionStorage.removeItem('token');
