@@ -6,6 +6,7 @@ use App\Http\Resources\PlaylistItemResource;
 use App\Models\Playlist;
 use App\Models\PlaylistItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PlaylistItemController extends BaseController
@@ -78,7 +79,13 @@ class PlaylistItemController extends BaseController
     public function paginate(Request $request)
     {
         $perPage = $request->per_page ?? 10;
-        $playlistItems = PlaylistItem::paginate($perPage);
-        return $this->success(PlaylistItemResource::collection($playlistItems));
+
+        $items =  DB::table('playlist_items')
+            ->select('playlist_items.id', 'playlist_items.playlist_id', 'playlist_items.song_id', 'playlist_items.date_added', 'playlists.name as playlist_name', 'songs.title as song_title')
+            ->join('playlists', 'playlist_items.playlist_id', '=', 'playlists.id')
+            ->join('songs', 'playlist_items.song_id', '=', 'songs.id')
+            ->paginate($perPage);
+
+        return $this->success($items);
     }
 }

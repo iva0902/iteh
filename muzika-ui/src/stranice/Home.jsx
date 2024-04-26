@@ -1,8 +1,39 @@
 import React from 'react';
 import {Col, Container, Image, Row} from "react-bootstrap";
 import musicForKids from "../slike/musicForKids.jpeg";
-
+import instance from "../request/instance";
 const Home = () => {
+
+    const [genre, setGenre] = React.useState([]);
+    const [quote, setQuote] = React.useState([]);
+
+    React.useEffect(() => {
+        //
+        instance.get('https://api.quotable.io/quotes/random')
+            .then((response) => {
+                console.log(response.data);
+                setQuote(response.data[0]);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    React.useEffect(() => {
+        //add header
+
+
+        instance.get('https://binaryjazz.us/wp-json/genrenator/v1/genre/1')
+            .then((response) => {
+                console.log(response.data);
+                setGenre(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+
     return (
         <div>
             <Container>
@@ -24,6 +55,16 @@ const Home = () => {
                     <p>Join us on this musical journey and let Music for Kids be your child's companion in discovering the magic of melodies. Together, let's create harmonious moments that will last a lifetime.</p>
                 </Col>
             </Row>
+                <Row>
+                    <h1>Currently hot genre</h1>
+                    <h2>{genre}</h2>
+                </Row>
+
+                <Row>
+                    <h1>Quote of the day</h1>
+                    <h2>{quote.content}</h2>
+                    <h3>{quote.author}</h3>
+                </Row>
             </Container>
         </div>
     );
